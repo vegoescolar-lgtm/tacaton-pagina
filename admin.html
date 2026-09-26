@@ -55,11 +55,11 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
             <h2 class="text-xl font-bold text-slate-800">Tablón de Anuncios</h2>
-            <p class="text-sm text-slate-500">Sube fotos de publicidad / anuncios</p>
+            <p class="text-sm text-slate-500">Sube fotos o videos de publicidad / anuncios</p>
           </div>
           <label class="bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-5 py-2.5 rounded-xl cursor-pointer transition text-sm inline-flex items-center">
             <i class="fa-solid fa-upload mr-2"></i> Subir anuncio
-            <input type="file" id="anuncioInput" accept="image/*" class="hidden" multiple>
+            <input type="file" id="anuncioInput" accept="image/*,video/*" class="hidden" multiple>
           </label>
         </div>
         <div id="anunciosList" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -88,13 +88,11 @@
   </div>
 
   <script>
-    // ========== CONFIGURACIÓN SUPABASE ==========
     const SUPABASE_URL = 'https://bribvcybidzyluumuoof.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyaWJ2Y3liaWR6eWx1dW11b29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyOTI1NzIsImV4cCI6MjEwNTg2ODU3Mn0.72oAR9jo0LMUjEeCYonfTLUDjbEFQVz-PsjZMxdrOt4';
 
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ========== ELEMENTOS ==========
     const loginSection = document.getElementById('loginSection');
     const adminSection = document.getElementById('adminSection');
     const loginForm = document.getElementById('loginForm');
@@ -105,7 +103,6 @@
     const anunciosList = document.getElementById('anunciosList');
     const logosList = document.getElementById('logosList');
 
-    // ========== AUTH ==========
     async function checkSession() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
@@ -149,7 +146,6 @@
       showLogin();
     });
 
-    // ========== CARGAR ARCHIVOS ==========
     async function loadFiles(bucket, container) {
       container.innerHTML = '<p class="text-slate-400 text-sm col-span-full">Cargando...</p>';
       const { data, error } = await supabaseClient.storage.from(bucket).list('', { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
@@ -169,18 +165,32 @@
       files.forEach(file => {
         const { data: urlData } = supabaseClient.storage.from(bucket).getPublicUrl(file.name);
         const url = urlData.publicUrl;
+        const isVideo = /\.(mp4|webm|ogg|mov)$/i.test(file.name);
 
         const card = document.createElement('div');
         card.className = 'relative group bg-slate-50 rounded-xl overflow-hidden border border-slate-100';
-        card.innerHTML = `
-          <img src="${url}" alt="${file.name}" class="w-full h-32 object-contain bg-white p-2">
-          <div class="p-2">
-            <p class="text-xs text-slate-500 truncate">${file.name}</p>
-          </div>
-          <button data-bucket="${bucket}" data-name="${file.name}" class="delete-btn absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-sm">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        `;
+        
+        if (isVideo) {
+          card.innerHTML = `
+            <video src="${url}" class="w-full h-32 object-cover bg-black" muted></video>
+            <div class="p-2">
+              <p class="text-xs text-slate-500 truncate">${file.name}</p>
+            </div>
+            <button data-bucket="${bucket}" data-name="${file.name}" class="delete-btn absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-sm">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          `;
+        } else {
+          card.innerHTML = `
+            <img src="${url}" alt="${file.name}" class="w-full h-32 object-contain bg-white p-2">
+            <div class="p-2">
+              <p class="text-xs text-slate-500 truncate">${file.name}</p>
+            </div>
+            <button data-bucket="${bucket}" data-name="${file.name}" class="delete-btn absolute top-2 right-2 bg-red-500 text-white w-8 h-8 rounded-full opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-sm">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          `;
+        }
         container.appendChild(card);
       });
 
@@ -203,7 +213,6 @@
     function loadAnuncios() { loadFiles('anuncios', anunciosList); }
     function loadLogos() { loadFiles('logos', logosList); }
 
-    // ========== SUBIR ARCHIVOS ==========
     async function uploadFiles(bucket, input) {
       const files = Array.from(input.files || []);
       if (files.length === 0) return;
@@ -226,7 +235,6 @@
     anuncioInput.addEventListener('change', () => uploadFiles('anuncios', anuncioInput));
     logoInput.addEventListener('change', () => uploadFiles('logos', logoInput));
 
-    // Iniciar
     checkSession();
   </script>
 </body>
