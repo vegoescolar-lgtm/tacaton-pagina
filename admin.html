@@ -92,7 +92,7 @@
     const SUPABASE_URL = 'https://bribvcybidzyluumuoof.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyaWJ2Y3liaWR6eWx1dW11b29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyOTI1NzIsImV4cCI6MjEwNTg2ODU3Mn0.72oAR9jo0LMUjEeCYonfTLUDjbEFQVz-PsjZMxdrOt4';
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     // ========== ELEMENTOS ==========
     const loginSection = document.getElementById('loginSection');
@@ -107,7 +107,7 @@
 
     // ========== AUTH ==========
     async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
         showAdmin();
         loadAnuncios();
@@ -133,7 +133,7 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
       if (error) {
         loginError.textContent = 'Correo o contraseña incorrectos';
         loginError.classList.remove('hidden');
@@ -145,14 +145,14 @@
     });
 
     logoutBtn.addEventListener('click', async () => {
-      await supabase.auth.signOut();
+      await supabaseClient.auth.signOut();
       showLogin();
     });
 
     // ========== CARGAR ARCHIVOS ==========
     async function loadFiles(bucket, container) {
       container.innerHTML = '<p class="text-slate-400 text-sm col-span-full">Cargando...</p>';
-      const { data, error } = await supabase.storage.from(bucket).list('', { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
+      const { data, error } = await supabaseClient.storage.from(bucket).list('', { limit: 100, sortBy: { column: 'created_at', order: 'desc' } });
 
       if (error) {
         container.innerHTML = `<p class="text-red-500 text-sm col-span-full">Error: ${error.message}</p>`;
@@ -167,7 +167,7 @@
 
       container.innerHTML = '';
       files.forEach(file => {
-        const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(file.name);
+        const { data: urlData } = supabaseClient.storage.from(bucket).getPublicUrl(file.name);
         const url = urlData.publicUrl;
 
         const card = document.createElement('div');
@@ -189,7 +189,7 @@
           if (!confirm('¿Eliminar este archivo?')) return;
           const bucket = btn.dataset.bucket;
           const name = btn.dataset.name;
-          const { error } = await supabase.storage.from(bucket).remove([name]);
+          const { error } = await supabaseClient.storage.from(bucket).remove([name]);
           if (error) {
             alert('Error al eliminar: ' + error.message);
             return;
@@ -210,7 +210,7 @@
 
       for (const file of files) {
         const fileName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
-        const { error } = await supabase.storage.from(bucket).upload(fileName, file, {
+        const { error } = await supabaseClient.storage.from(bucket).upload(fileName, file, {
           cacheControl: '3600',
           upsert: false
         });
