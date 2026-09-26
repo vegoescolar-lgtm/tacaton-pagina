@@ -11,10 +11,29 @@
         .bg-pastel-blue { background-color: #f0f7f4; }
         @keyframes pulse-soft {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+            50% { transform: scale(1.03); }
         }
         .animate-pulse-soft {
-            animation: pulse-soft 3s infinite ease-in-out;
+            animation: pulse-soft 2.5s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #059669, #0ea5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
         }
     </style>
 </head>
@@ -23,25 +42,24 @@
     
     <!-- Barra Superior -->
     <div class="bg-gradient-to-r from-sky-500 via-teal-500 to-emerald-500 text-white text-center py-2.5 px-4 text-sm font-bold tracking-wide shadow-sm animate-pulse-soft">
-        🎉 ¡Inscripciones Abiertas Ciclo Escolar 2027 • Educación Presencial con Apoyos! 🎉
+        🎉 ¡Inscripciones Abiertas 2027! • Educación Presencial con Becas y Apoyos Reales 🎉
     </div>
     
     <!-- Header -->
-    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-emerald-100 shadow-xs">
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-emerald-100 shadow-sm">
         <div class="max-w-6xl mx-auto px-4 py-3.5 flex justify-between items-center">
             <div class="flex items-center space-x-3">
-                <img src="img/escudo.png" alt="Escudo Tacatón" class="w-12 h-12 object-contain">
+                <img src="img/escudo.png" alt="Escudo Tacatón" class="w-12 h-12 object-contain animate-float">
                 <div>
                     <span class="block font-extrabold text-slate-800 text-base leading-tight">Inst. Por Coop. Tacatón</span>
                     <span class="text-xs text-emerald-600 font-semibold">¡El Estudio Es Desarrollo!</span>
                 </div>
             </div>
             <div class="hidden md:flex items-center space-x-6 text-sm font-medium text-slate-600">
-                <a href="#modalidad" class="hover:text-emerald-600 transition">Modalidad</a>
-                <a href="#beneficios" class="hover:text-emerald-600 transition">Cuotas y Apoyos</a>
+                <a href="#beneficios" class="hover:text-emerald-600 transition">Becas y Apoyos</a>
+                <a href="#cursos" class="hover:text-emerald-600 transition">Cursos Extra</a>
                 <a href="#anuncios" class="hover:text-emerald-600 transition">Anuncios</a>
                 <a href="#ubicacion" class="hover:text-emerald-600 transition">Ubicación</a>
-                <a href="#contacto" class="hover:text-emerald-600 transition">Contacto</a>
             </div>
             <a href="https://wa.me/50254627397" target="_blank" onclick="playAudio()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-medium px-5 py-2.5 rounded-full shadow-md transition transform hover:scale-105 text-sm flex items-center">
                 <i class="fa-brands fa-whatsapp mr-2"></i> Contáctanos
@@ -52,28 +70,48 @@
     <!-- Hero -->
     <section class="py-16 md:py-24 px-4 bg-gradient-to-b from-sky-50 via-teal-50/40 to-emerald-50/30 relative overflow-hidden">
         <div class="max-w-5xl mx-auto text-center relative z-10">
-            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider inline-block mb-4 shadow-xs">
-                ✨ Excelencia Educativa Presencial • Amatitlán 2027 ✨
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider inline-block mb-5 shadow-sm">
+                ✨ Educación Presencial de Calidad • Amatitlán 2027 ✨
             </span>
-            <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6 leading-tight">
-                Construye Tu Futuro Con Clases <span class="text-emerald-600 underline decoration-emerald-300 decoration-wavy">100% Presenciales</span>
+            
+            <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-4 leading-tight">
+                Estudia a <span class="gradient-text">Bajo Costo</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-                Formación integral en el aula con cuotas cooperativas accesibles, apoyos en útiles escolares y bolsa de víveres, además de una plataforma digital para el control de los padres.
+            <h2 class="text-2xl md:text-4xl font-bold text-slate-800 mb-6">
+                con <span class="text-emerald-600">Becas</span> y Apoyos Reales
+            </h2>
+            
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Formación 100% presencial con docentes capacitados, cuotas cooperativas accesibles, 
+                útiles escolares, bolsa de víveres y cursos extras de <strong>Mecanografía</strong> y <strong>Contabilidad</strong>.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-10">
                 <a href="https://wa.me/50254627397" target="_blank" onclick="playAudio()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg hover:shadow-emerald-200 transition transform hover:-translate-y-1 text-base flex items-center justify-center">
                     <i class="fa-brands fa-whatsapp mr-2 text-lg"></i> Escríbenos por WhatsApp
                 </a>
-                <a href="#beneficios" onclick="playAudio()" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold px-8 py-4 rounded-2xl transition text-base shadow-xs flex items-center justify-center">
-                    <i class="fa-solid fa-graduation-cap mr-2 text-emerald-600"></i> Conoce Cuotas y Apoyos
+                <a href="#beneficios" onclick="playAudio()" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold px-8 py-4 rounded-2xl transition text-base shadow-sm flex items-center justify-center">
+                    <i class="fa-solid fa-graduation-cap mr-2 text-emerald-600"></i> Ver Beneficios
                 </a>
+            </div>
+
+            <!-- Badges rápidos -->
+            <div class="flex flex-wrap justify-center gap-3 text-sm">
+                <span class="bg-white/80 border border-emerald-200 text-emerald-700 px-4 py-2 rounded-full font-medium shadow-sm">
+                    <i class="fa-solid fa-hand-holding-heart mr-1"></i> Becas disponibles
+                </span>
+                <span class="bg-white/80 border border-sky-200 text-sky-700 px-4 py-2 rounded-full font-medium shadow-sm">
+                    <i class="fa-solid fa-chalkboard-user mr-1"></i> Docentes capacitados
+                </span>
+                <span class="bg-white/80 border border-teal-200 text-teal-700 px-4 py-2 rounded-full font-medium shadow-sm">
+                    <i class="fa-solid fa-keyboard mr-1"></i> Mecanografía gratis
+                </span>
             </div>
         </div>
     </section>
 
-    <!-- Tablón de Anuncios (dinámico) -->
-    <section id="anuncios" class="py-12 px-4 max-w-6xl mx-auto">
+    <!-- Tablón de Anuncios -->
+    <section id="anuncios" class="py-14 px-4 max-w-6xl mx-auto">
         <div class="text-center mb-8">
             <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Tablón de Anuncios</h2>
             <p class="text-slate-600 text-sm">Publicidad e información importante del instituto</p>
@@ -83,70 +121,117 @@
         </div>
     </section>
     
-    <!-- Modalidad -->
-    <section id="modalidad" class="py-16 px-4 max-w-6xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-3">Educación Presencial con Control Digital</h2>
-            <p class="text-slate-600">Lo mejor de ambos mundos: la convivencia en el aula y la supervisión tecnológica al alcance de tu mano.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-sky-100 hover:shadow-md transition">
-                <div class="w-14 h-14 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner">
-                    <i class="fa-solid fa-chalkboard-user"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-800 mb-3">Clases 100% Presenciales</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    Asistencia regular al instituto para garantizar un aprendizaje profundo, interacción social sana, laboratorios y actividades extracurriculares dirigidas por docentes calificados en el establecimiento.
-                </p>
-            </div>
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-emerald-100 hover:shadow-md transition">
-                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-inner">
-                    <i class="fa-solid fa-mobile-screen-button"></i>
-                </div>
-                <h3 class="text-xl font-bold text-slate-800 mb-3">Plataforma de Control para Papás</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    Pensada especialmente para aquellos padres que por sus labores diarias no pueden acercarse constantemente al establecimiento; permite revisar notas, avisos y asistencia de manera digital.
-                </p>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Cuotas y Apoyos -->
+    <!-- Beneficios / Becas -->
     <section id="beneficios" class="py-16 bg-white border-y border-slate-100 px-4">
-        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div>
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
                 <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider inline-block mb-3">
-                    Cuotas y Apoyos
+                    ¿Por qué elegirnos?
                 </span>
-                <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Mensualidad Accesible + Apoyos Reales</h2>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Al ser un instituto por cooperativa se paga una <strong>mensualidad accesible</strong> destinada al sostenimiento de la institución. 
-                    Además, se brinda apoyo a los estudiantes con <strong>útiles escolares</strong> y <strong>bolsa de víveres</strong> para aliviar la carga económica de las familias.
-                </p>
-                <ul class="space-y-3 text-sm text-slate-700 font-medium">
-                    <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-3 text-lg"></i> Mensualidad cooperativa moderada</li>
-                    <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-3 text-lg"></i> Apoyo con útiles escolares</li>
-                    <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-3 text-lg"></i> Bolsa de víveres para las familias</li>
-                    <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-3 text-lg"></i> Transparencia en aportes y gestiones</li>
-                </ul>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">Educación de Calidad a Bajo Costo</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Porque somos un instituto por cooperativa, podemos ofrecer precios accesibles y apoyos reales a las familias.</p>
             </div>
-            <div class="bg-gradient-to-br from-sky-50 to-emerald-50 p-8 rounded-3xl shadow-md border border-emerald-100 text-center relative">
-                <div class="absolute -top-3 -right-3 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">¡Importante!</div>
-                <div class="text-emerald-500 text-5xl mb-4"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                <h3 class="text-xl font-bold text-slate-800 mb-2">No es educación gratuita</h3>
-                <p class="text-slate-600 text-sm leading-relaxed">
-                    Se paga una mensualidad. El apoyo consiste en útiles escolares y bolsa de víveres para quienes más lo necesitan.
-                </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-emerald-50 to-white p-7 rounded-3xl border border-emerald-100 card-hover">
+                    <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-2xl mb-5 shadow-md">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Becas y Apoyos</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Ofrecemos becas y apoyos en útiles escolares + bolsa de víveres para las familias que más lo necesitan.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-sky-50 to-white p-7 rounded-3xl border border-sky-100 card-hover">
+                    <div class="w-14 h-14 bg-sky-500 text-white rounded-2xl flex items-center justify-center text-2xl mb-5 shadow-md">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Docentes Capacitados</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Contamos con maestros preparados y comprometidos para dar clases 100% presenciales de calidad.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-teal-50 to-white p-7 rounded-3xl border border-teal-100 card-hover">
+                    <div class="w-14 h-14 bg-teal-500 text-white rounded-2xl flex items-center justify-center text-2xl mb-5 shadow-md">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">Cuotas Cooperativas</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Mensualidad accesible porque somos cooperativa. El dinero se reinvierte en la educación de tus hijos.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
-    
-    <!-- Instituciones Aliadas (logos dinámicos) -->
+
+    <!-- Cursos Extra -->
+    <section id="cursos" class="py-16 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-3">Cursos Extra que Impulsan tu Futuro</h2>
+            <p class="text-slate-600">Además de la formación académica, te damos herramientas prácticas</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Mecanografía -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden card-hover">
+                <div class="bg-gradient-to-r from-sky-500 to-teal-500 p-6 text-white">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-keyboard"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Mecanografía</h3>
+                            <p class="text-sky-100 text-sm">De 12:00 a 1:00 p.m.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Aprende a escribir a máquina de forma rápida y profesional. Una habilidad muy solicitada en el mundo laboral.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Horario: 12:00 a 1:00 p.m.</li>
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Incluido para estudiantes</li>
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Certificado al finalizar</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contabilidad -->
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden card-hover">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-500 p-6 text-white">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold">Contabilidad</h3>
+                            <p class="text-emerald-100 text-sm">Para los 3 grados</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                        Formación en contabilidad práctica para todos los grados. Ideal para quienes quieren emprender o trabajar en oficinas.
+                    </p>
+                    <ul class="space-y-2 text-sm text-slate-700">
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Disponible en los 3 grados</li>
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Enfoque práctico y real</li>
+                        <li class="flex items-center"><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Docentes especializados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instituciones Aliadas -->
     <section class="py-16 px-4 max-w-6xl mx-auto text-center">
         <h2 class="text-3xl font-extrabold text-slate-800 mb-3">Con el Respaldo de Instituciones Aliadas</h2>
-        <p class="text-slate-500 text-sm mb-10 max-w-xl mx-auto">Trabajamos hombro a hombro con organizaciones firmemente comprometidas con la juventud estudiosa.</p>
+        <p class="text-slate-500 text-sm mb-10 max-w-xl mx-auto">Trabajamos hombro a hombro con organizaciones comprometidas con la juventud.</p>
         
-        <div id="logosContainer" class="grid grid-cols-2 sm:grid-cols-4 gap-6 items-center">
+        <div id="logosContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center">
             <p class="text-slate-400 text-sm col-span-full">Cargando logos...</p>
         </div>
     </section>
@@ -157,33 +242,34 @@
             <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider inline-block mb-3">
                 Visítanos o Comunícate
             </span>
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Información de Contacto y Dirección</h2>
-            <p class="text-slate-600 text-sm">Te esperamos en nuestras instalaciones presenciales o escríbenos por WhatsApp.</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-2">Información de Contacto</h2>
+            <p class="text-slate-600 text-sm">Te esperamos en nuestras instalaciones o escríbenos por WhatsApp.</p>
         </div>
-        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div class="bg-white p-8 rounded-3xl border border-sky-100 text-center md:text-left shadow-xs">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white p-8 rounded-3xl border border-sky-100 text-center md:text-left shadow-sm">
                 <div class="w-12 h-12 bg-sky-500 text-white rounded-2xl flex items-center justify-center text-xl mb-4 mx-auto md:mx-0">
                     <i class="fa-solid fa-location-dot"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-800 mb-2">Nuestra Dirección</h3>
                 <p class="text-slate-600 text-sm leading-relaxed">
-                    Km 35.5 Circunvalación al Lago de Amatitlán, Aldea Tacatón, Amatitlán, Guatemala.
+                    Km 35.5 Circunvalación al Lago de Amatitlán,<br>
+                    Aldea Tacatón, Amatitlán, Guatemala.
                 </p>
             </div>
-            <div id="contacto" class="bg-white p-8 rounded-3xl border border-emerald-100 text-center shadow-xs">
+            <div class="bg-white p-8 rounded-3xl border border-emerald-100 text-center shadow-sm">
                 <div class="w-12 h-12 bg-emerald-500 text-white rounded-2xl flex items-center justify-center text-xl mb-4 mx-auto">
                     <i class="fa-brands fa-whatsapp"></i>
                 </div>
                 <h3 class="text-lg font-bold text-slate-800 mb-3">Teléfonos con WhatsApp</h3>
                 <div class="flex flex-col sm:flex-row justify-center gap-3">
                     <a href="https://wa.me/50254627397" target="_blank" onclick="playAudio()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-sm transition flex items-center justify-center">
-                        <i class="fa-brands fa-whatsapp mr-2 text-base"></i> 5462-7397
+                        <i class="fa-brands fa-whatsapp mr-2"></i> 5462-7397
                     </a>
                     <a href="https://wa.me/50236250040" target="_blank" onclick="playAudio()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-sm transition flex items-center justify-center">
-                        <i class="fa-brands fa-whatsapp mr-2 text-base"></i> 3625-0040
+                        <i class="fa-brands fa-whatsapp mr-2"></i> 3625-0040
                     </a>
                 </div>
-                <p class="text-xs text-slate-500 mt-3">¡Ambos números disponen de WhatsApp activo!</p>
+                <p class="text-xs text-slate-500 mt-3">¡Ambos números tienen WhatsApp activo!</p>
             </div>
         </div>
     </section>
@@ -205,18 +291,19 @@
             const sound = document.getElementById('clickSound');
             if (sound) {
                 sound.currentTime = 0;
-                sound.play().catch(e => console.log("Audio play blocked by browser policy"));
+                sound.play().catch(e => console.log("Audio play blocked"));
             }
         }
 
         // ========== SUPABASE ==========
         const SUPABASE_URL = 'https://bribvcybidzyluumuoof.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyaWJ2Y3liaWR6eWx1dW11b29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyOTI1NzIsImV4cCI6MjEwNTg2ODU3Mn0.72oAR9jo0LMUjEeCYonfTLUDjbEFQVz-PsjZMxdrOt4';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function loadPublicImages(bucket, containerId, emptyMsg) {
             const container = document.getElementById(containerId);
-            const { data, error } = await supabase.storage.from(bucket).list('', {
+            const { data, error } = await supabaseClient.storage.from(bucket).list('', {
                 limit: 50,
                 sortBy: { column: 'created_at', order: 'desc' }
             });
@@ -234,18 +321,18 @@
 
             container.innerHTML = '';
             files.forEach(file => {
-                const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(file.name);
+                const { data: urlData } = supabaseClient.storage.from(bucket).getPublicUrl(file.name);
                 const url = urlData.publicUrl;
 
                 if (bucket === 'anuncios') {
                     const card = document.createElement('div');
-                    card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition';
+                    card.className = 'bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-md transition card-hover';
                     card.innerHTML = `<img src="${url}" alt="Anuncio" class="w-full h-56 object-cover">`;
                     container.appendChild(card);
                 } else {
                     const card = document.createElement('div');
-                    card.className = 'bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center h-44 hover:shadow-md transition';
-                    card.innerHTML = `<img src="${url}" alt="Logo" class="max-h-20 object-contain mb-2">`;
+                    card.className = 'bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex flex-col items-center justify-center h-36 hover:shadow-md transition card-hover';
+                    card.innerHTML = `<img src="${url}" alt="Logo" class="max-h-16 object-contain">`;
                     container.appendChild(card);
                 }
             });
