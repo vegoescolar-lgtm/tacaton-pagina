@@ -43,18 +43,19 @@
         .carousel-slide {
             min-width: 100%;
             height: 420px;
+            background: white;
         }
         .carousel-slide img, .carousel-slide video {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            background: #0f172a;
+            background: white;
         }
         .carousel-btn {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.45);
             color: white;
             border: none;
             width: 48px;
@@ -68,7 +69,7 @@
             transition: background 0.2s;
             z-index: 10;
         }
-        .carousel-btn:hover { background: rgba(0,0,0,0.75); }
+        .carousel-btn:hover { background: rgba(0,0,0,0.7); }
         .carousel-btn.prev { left: 16px; }
         .carousel-btn.next { right: 16px; }
         .carousel-dots {
@@ -84,12 +85,12 @@
             width: 10px;
             height: 10px;
             border-radius: 9999px;
-            background: rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.3);
             border: none;
             cursor: pointer;
             transition: background 0.2s;
         }
-        .carousel-dot.active { background: white; }
+        .carousel-dot.active { background: #059669; }
     </style>
 </head>
 <body class="bg-pastel-blue text-slate-700 font-sans antialiased selection:bg-emerald-200 selection:text-emerald-900">
@@ -331,26 +332,75 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJyaWJ2Y3liaWR6eWx1dW11b29mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyOTI1NzIsImV4cCI6MjEwNTg2ODU3Mn0.72oAR9jo0LMUjEeCYonfTLUDjbEFQVz-PsjZMxdrOt4';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Carrusel
+        // ========== CARRUSEL ==========
         let currentSlide = 0;
         let totalSlides = 0;
         let autoPlayInterval = null;
 
+        function stopAllVideos() {
+            document.querySelectorAll('.carousel-slide video').forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        }
+
+        function playCurrentVideo() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            if (!slides[currentSlide]) return;
+            
+            const video = slides[currentSlide].querySelector('video');
+            if (video) {
+                video.muted = false;
+                video.play().catch(() => {
+                    // Si el navegador bloquea el sonido, lo pone en mute y reproduce
+                    video.muted = true;
+                    video.play().catch(() => {});
+                });
+
+                // Cuando el video termine → pasar al siguiente
+                video.onended = () => {
+                    goToSlide(currentSlide + 1);
+                };
+            }
+        }
+
         function goToSlide(index) {
             if (totalSlides === 0) return;
+
+            stopAllVideos();
+            stopAutoPlay();
+
             currentSlide = (index + totalSlides) % totalSlides;
             document.getElementById('carouselTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
+            
             document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlide);
             });
+
+            // ¿Es un video el slide actual?
+            const currentEl = document.querySelectorAll('.carousel-slide')[currentSlide];
+            const isVideo = currentEl && currentEl.querySelector('video');
+
+            if (isVideo) {
+                playCurrentVideo();
+            } else {
+                // Si es foto, volver a activar el timer
+                startAutoPlay();
+            }
         }
 
         function startAutoPlay() {
             stopAutoPlay();
-            autoPlayInterval = setInterval(() => goToSlide(currentSlide + 1), 5000);
+            autoPlayInterval = setInterval(() => {
+                goToSlide(currentSlide + 1);
+            }, 5000);
         }
+
         function stopAutoPlay() {
-            if (autoPlayInterval) clearInterval(autoPlayInterval);
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
         }
 
         async function loadAnunciosCarousel() {
@@ -389,8 +439,9 @@
 
                 const slide = document.createElement('div');
                 slide.className = 'carousel-slide';
+
                 if (isVideo) {
-                    slide.innerHTML = `<video src="${url}" controls muted playsinline class="w-full h-full object-contain bg-black"></video>`;
+                    slide.innerHTML = `<video src="${url}" playsinline class="w-full h-full object-contain bg-white"></video>`;
                 } else {
                     slide.innerHTML = `<img src="${url}" alt="Anuncio ${index + 1}">`;
                 }
@@ -398,20 +449,18 @@
 
                 const dot = document.createElement('button');
                 dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
-                dot.addEventListener('click', () => { goToSlide(index); startAutoPlay(); });
+                dot.addEventListener('click', () => goToSlide(index));
                 dotsContainer.appendChild(dot);
             });
 
-            document.getElementById('prevBtn').onclick = () => { goToSlide(currentSlide - 1); startAutoPlay(); };
-            document.getElementById('nextBtn').onclick = () => { goToSlide(currentSlide + 1); startAutoPlay(); };
+            document.getElementById('prevBtn').onclick = () => goToSlide(currentSlide - 1);
+            document.getElementById('nextBtn').onclick = () => goToSlide(currentSlide + 1);
 
-            const carousel = document.getElementById('carousel');
-            carousel.addEventListener('mouseenter', stopAutoPlay);
-            carousel.addEventListener('mouseleave', startAutoPlay);
-
-            startAutoPlay();
+            // Iniciar
+            goToSlide(0);
         }
 
+        // ========== LOGOS ==========
         async function loadLogos() {
             const container = document.getElementById('logosContainer');
             const { data, error } = await supabaseClient.storage.from('logos').list('', {
